@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Siberian Cyrillic to Latin conversion</title>
+    </head>
+    <body>
+    <h1>Siberian Cyrillic to Latin conversion</h1>
+    <h2>by <a href="https://github.com/bignavigator">bignavigator</a></h2>   
+    <div class="form-group">
+        <textarea id="input" class="form-control" rows="5">Кожной людь рожатса вольготным и ровным в евонной чесе и правах. Вон наделӧнной розумом и совессю и должон прямить со дружными как братан.</textarea>
+        <textarea id="output" class="form-control" rows="5">Kožnoj liudj rožatsa voljgotnym ji rovnym v jevonnoj čese ji pravah. Von nadelionnoj rozumom ji sovessiu ji dolžon priamitj so družnymi kak bratan.</textarea>
+    </div>
+    <div class="form-group" style="text-align: center;">
+        <button type="button" id="submit" class="btn btn-primary">Transliterate</button>
+    </div>
+    <link rel="stylesheet" href="https://snipp.ru/cdn/bootstrap/4.3/bootstrap.min.css">
+
+    <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+    function translit(word){
+        var answer = '';
+        var converter = {
+            'а': 'a', 'е': 'e', 'и': 'i', 'ы': 'y', 'о': 'o', 'у': 'u', 'ў': 'w',
+            'я': 'ja', 'ю': 'ju', 'ӧ': 'jo',
+            'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'ж': 'ž', 'з': 'z', 'й': 'j',
+            'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'п': 'p', 'р': 'r', 'с': 's', 
+            'т': 't', 'ф': 'f', 'х': 'h', 'ц': 'c', 'ч': 'č', 'ш': 'š',
+
+            'А': 'A', 'Е': 'E', 'И': 'I', 'Ы': 'Y', 'О': 'O', 'У': 'U', 'Ў': 'W',
+            'Я': 'Ja', 'Ю': 'Ju', 'Ӧ': 'Jo',
+            'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D', 'Ж': 'Ž', 'З': 'Z', 'Й': 'J',
+            'К': 'K', 'Л': 'L', 'М': 'M', 'Н': 'N', 'П': 'P', 'Р': 'R', 'С': 'S', 
+            'Т': 'T', 'Ф': 'F', 'Х': 'H', 'Ц': 'C', 'Ч': 'Č', 'Ш': 'Š'
+        };
+
+        for (var i = 0; i < word.length; ++i ) {
+            if (converter[word[i]] == undefined){
+                answer += word[i];
+            } else {
+                answer += converter[word[i]];
+            }
+        }
+        var newanswer = answer.replace(/(bj)|(vj)|(gj)|(dj)|(zj)|(kj)|(lj)|(mj)|(nj)|(pj)|(rj)|(sj)|(tj)|(fj)|(hj)|( i)|(I)|(ai)|(ei)|(ii)|(oi)|(ui)|(^\i)|( e)|(E)|(ae)|(ee)|(ie)|(oe)|(ue)|(^\e)|(ь)|(ъ)/g, 
+        function(str, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15,
+        i1, i2, i3, i4, i5, i6, i7, i8, e1, e2, e3, e4, e5, e6, e7, e8, s1, s2) {
+            if(p1) return 'bi';
+            if(p2) return 'vi';
+            if(p3) return 'gi';
+            if(p4) return 'di';
+            if(p5) return 'zj';
+            if(p6) return 'ki';
+            if(p7) return 'li';
+            if(p8) return 'mi';
+            if(p9) return 'ni';
+            if(p10) return 'pi';
+            if(p11) return 'ri';
+            if(p12) return 'si';
+            if(p13) return 'ti';
+            if(p14) return 'fi';
+            if(p15) return 'hi';
+
+            if(i1) return ' ji';
+            if(i2) return 'Ji';
+            if(i3) return 'aji';
+            if(i4) return 'eji';
+            if(i5) return 'iji';
+            if(i6) return 'oji';
+            if(i7) return 'uji';
+            if(i8) return 'ji';
+
+            if(e1) return ' je';
+            if(e2) return 'Je';
+            if(e3) return 'aje';
+            if(e4) return 'eje';
+            if(e5) return 'ije';
+            if(e6) return 'oje';
+            if(e7) return 'uje';
+            if(e8) return 'je';
+
+            if(s1) return 'j';        
+            if(s2) return 'j';       
+            
+        });
+        return newanswer.replace(/(jj)/g, function (j1) { 
+            if(j1) return 'j';
+    
+    }); 
+    }
+
+
+    $(document).ready(function () {
+        $('#input').on('change', function (e) {
+        $('#output').val($('#input').val());
+        });
+    });
+
+    $('#submit').click(function(){
+        $('#output').val(function(i, val){
+            return translit(val);
+        });
+        
+        return false;
+    });
+    </script>
+    </body>
+</html>
